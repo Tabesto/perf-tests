@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Plan de test" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="Variables pré-définies" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="oca-perf" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
+        <stringProp name="Threads initial delay">0</stringProp>
+        <stringProp name="Start users count">10</stringProp>
+        <stringProp name="Start users count burst">0</stringProp>
+        <stringProp name="Start users period">30</stringProp>
+        <stringProp name="Stop users count">5</stringProp>
+        <stringProp name="Stop users period">1</stringProp>
+        <stringProp name="flighttime">60</stringProp>
+        <stringProp name="rampUp">5</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+      </kg.apc.jmeter.threads.SteppingThreadGroup>
+      <hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">content-type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Authorization</stringProp>
+              <stringProp name="Header.value">Bearer ${MobileJWTToken}</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="user1" elementType="Argument">
+              <stringProp name="Argument.name">user1</stringProp>
+              <stringProp name="Argument.value">00000000-4e69-d0a6-0033-c5870033c566</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="user2" elementType="Argument">
+              <stringProp name="Argument.name">user2</stringProp>
+              <stringProp name="Argument.value">00000000-4e69-d0a6-0033-c5870033c466</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="user3" elementType="Argument">
+              <stringProp name="Argument.name">user3</stringProp>
+              <stringProp name="Argument.value">00000000-4e69-d0a6-0033-c5870033c366</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="user4" elementType="Argument">
+              <stringProp name="Argument.name">user4</stringProp>
+              <stringProp name="Argument.value">00000000-4e69-d0a6-0033-c5870033c266</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">D:/perf-tests/oca/data/sellerName.csv</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.group</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">seller</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="oca-menu-availibilty" enabled="true"/>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${seller}-${user1}" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${__P(urlOcaServer)}</stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/v1/seller/${sellerName}/cache/menu-availability</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="script">load(props.get(&apos;pathJmeter&apos;)+&apos;/crypto-js-3.1.9/crypto-js.js&apos;);
+
+
+function base64url(source) {
+	// Encode in classical base64
+	encodedSource = CryptoJS.enc.Base64.stringify(source);
+
+	// Remove padding equal characters
+	encodedSource = encodedSource.replace(/=+$/, &apos;&apos;);
+
+	// Replace characters according to base64url specifications
+	encodedSource = encodedSource.replace(/\+/g, &apos;-&apos;);
+	encodedSource = encodedSource.replace(/\//g, &apos;_&apos;);
+
+	return encodedSource;
+}
+
+function addEXP(request) {
+	var exp = Math.floor(Date.now() / 1000) + 3600;
+	data.exp = exp;
+	return data;
+}
+
+var header = {
+	&quot;alg&quot;: &quot;HS256&quot;,
+	&quot;typ&quot;: &quot;JWT&quot;
+};
+
+var data = {
+    &quot;iss&quot;: &quot;api&quot;,
+    &quot;iat&quot;: Math.floor(Date.now() / 1000) - 6,
+    &quot;nbf&quot;: Math.floor(Date.now() / 1000) - 6,
+    &quot;username&quot;: &quot;api&quot;,
+    &quot;data&quot;: {
+        &quot;seller&quot;: {
+            &quot;site_name&quot;: &quot;${sellerName}&quot;
+        },
+        &quot;table&quot;: [],
+        &quot;user&quot;: {
+            &quot;username&quot;: vars.get(&quot;user1&quot;),
+            &quot;default_table_id&quot;: null,
+            &quot;roles&quot;: [
+                &quot;ROLE_TAB_ADMIN&quot;,
+                &quot;ROLE_USER&quot;
+            ]
+        }
+    }
+}
+
+data = addEXP(data);
+
+var secret = &quot;yL9nT7WfMFcV4kGtoiUv8N7TiRM4a2fU&quot;;
+
+// encode header
+var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));
+var encodedHeader = base64url(stringifiedHeader);
+
+// encode data
+var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));
+
+
+var encodedData = base64url(stringifiedData);
+// build token
+var token = encodedHeader + &quot;.&quot; + encodedData;
+
+// sign token
+var signature = CryptoJS.HmacSHA256(token, secret);
+signature = base64url(signature);
+
+var signedToken = token + &quot;.&quot; + signature;
+vars.put(&quot;MobileJWTToken&quot;, signedToken)
+log.info(&quot;*******************************&quot;+signedToken);</stringProp>
+              <stringProp name="scriptLanguage">javascript</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${seller}-${user3}" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${__P(urlOcaServer)}</stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/v1/seller/${sellerName}/cache/menu-availability</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+              <stringProp name="RandomTimer.range">15000</stringProp>
+            </UniformRandomTimer>
+            <hashTree/>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="script">load(props.get(&apos;pathJmeter&apos;)+&apos;/crypto-js-3.1.9/crypto-js.js&apos;);
+
+
+function base64url(source) {
+	// Encode in classical base64
+	encodedSource = CryptoJS.enc.Base64.stringify(source);
+
+	// Remove padding equal characters
+	encodedSource = encodedSource.replace(/=+$/, &apos;&apos;);
+
+	// Replace characters according to base64url specifications
+	encodedSource = encodedSource.replace(/\+/g, &apos;-&apos;);
+	encodedSource = encodedSource.replace(/\//g, &apos;_&apos;);
+
+	return encodedSource;
+}
+
+function addEXP(request) {
+	var exp = Math.floor(Date.now() / 1000) + 3600;
+	data.exp = exp;
+	return data;
+}
+
+var header = {
+	&quot;alg&quot;: &quot;HS256&quot;,
+	&quot;typ&quot;: &quot;JWT&quot;
+};
+
+var data = {
+    &quot;iss&quot;: &quot;api&quot;,
+    &quot;iat&quot;: Math.floor(Date.now() / 1000) - 6,
+    &quot;nbf&quot;: Math.floor(Date.now() / 1000) - 6,
+    &quot;username&quot;: &quot;api&quot;,
+    &quot;data&quot;: {
+        &quot;seller&quot;: {
+            &quot;site_name&quot;: &quot;${sellerName}&quot;
+        },
+        &quot;table&quot;: [],
+        &quot;user&quot;: {
+            &quot;username&quot;: vars.get(&quot;user1&quot;),
+            &quot;default_table_id&quot;: null,
+            &quot;roles&quot;: [
+                &quot;ROLE_TAB_ADMIN&quot;,
+                &quot;ROLE_USER&quot;
+            ]
+        }
+    }
+}
+
+data = addEXP(data);
+
+var secret = &quot;yL9nT7WfMFcV4kGtoiUv8N7TiRM4a2fU&quot;;
+
+// encode header
+var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));
+var encodedHeader = base64url(stringifiedHeader);
+
+// encode data
+var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));
+
+
+var encodedData = base64url(stringifiedData);
+// build token
+var token = encodedHeader + &quot;.&quot; + encodedData;
+
+// sign token
+var signature = CryptoJS.HmacSHA256(token, secret);
+signature = base64url(signature);
+
+var signedToken = token + &quot;.&quot; + signature;
+vars.put(&quot;MobileJWTToken&quot;, signedToken)
+log.info(&quot;*******************************&quot;+signedToken);</stringProp>
+              <stringProp name="scriptLanguage">javascript</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${seller}-${user2}" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${__P(urlOcaServer)}</stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/v1/seller/${sellerName}/cache/menu</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">1000</stringProp>
+              <stringProp name="RandomTimer.range">5000</stringProp>
+            </UniformRandomTimer>
+            <hashTree/>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="script">load(props.get(&apos;pathJmeter&apos;)+&apos;/crypto-js-3.1.9/crypto-js.js&apos;);
+
+
+function base64url(source) {
+	// Encode in classical base64
+	encodedSource = CryptoJS.enc.Base64.stringify(source);
+
+	// Remove padding equal characters
+	encodedSource = encodedSource.replace(/=+$/, &apos;&apos;);
+
+	// Replace characters according to base64url specifications
+	encodedSource = encodedSource.replace(/\+/g, &apos;-&apos;);
+	encodedSource = encodedSource.replace(/\//g, &apos;_&apos;);
+
+	return encodedSource;
+}
+
+function addEXP(request) {
+	var exp = Math.floor(Date.now() / 1000) + 3600;
+	data.exp = exp;
+	return data;
+}
+
+var header = {
+	&quot;alg&quot;: &quot;HS256&quot;,
+	&quot;typ&quot;: &quot;JWT&quot;
+};
+
+var data = {
+    &quot;iss&quot;: &quot;api&quot;,
+    &quot;iat&quot;: Math.floor(Date.now() / 1000) - 6,
+    &quot;nbf&quot;: Math.floor(Date.now() / 1000) - 6,
+    &quot;username&quot;: &quot;api&quot;,
+    &quot;data&quot;: {
+        &quot;seller&quot;: {
+            &quot;site_name&quot;: &quot;${sellerName}&quot;
+        },
+        &quot;table&quot;: [],
+        &quot;user&quot;: {
+            &quot;username&quot;: vars.get(&quot;user1&quot;),
+            &quot;default_table_id&quot;: null,
+            &quot;roles&quot;: [
+                &quot;ROLE_TAB_ADMIN&quot;,
+                &quot;ROLE_USER&quot;
+            ]
+        }
+    }
+}
+
+data = addEXP(data);
+
+var secret = &quot;yL9nT7WfMFcV4kGtoiUv8N7TiRM4a2fU&quot;;
+
+// encode header
+var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));
+var encodedHeader = base64url(stringifiedHeader);
+
+// encode data
+var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));
+
+
+var encodedData = base64url(stringifiedData);
+// build token
+var token = encodedHeader + &quot;.&quot; + encodedData;
+
+// sign token
+var signature = CryptoJS.HmacSHA256(token, secret);
+signature = base64url(signature);
+
+var signedToken = token + &quot;.&quot; + signature;
+vars.put(&quot;MobileJWTToken&quot;, signedToken)
+log.info(&quot;*******************************&quot;+signedToken);</stringProp>
+              <stringProp name="scriptLanguage">javascript</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${seller}-${user4}" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${__P(urlOcaServer)}</stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/v1/seller/cache/menu-availability</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">1000</stringProp>
+              <stringProp name="RandomTimer.range">5000</stringProp>
+            </UniformRandomTimer>
+            <hashTree/>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="script">load(props.get(&apos;pathJmeter&apos;)+&apos;/crypto-js-3.1.9/crypto-js.js&apos;);
+
+
+function base64url(source) {
+	// Encode in classical base64
+	encodedSource = CryptoJS.enc.Base64.stringify(source);
+
+	// Remove padding equal characters
+	encodedSource = encodedSource.replace(/=+$/, &apos;&apos;);
+
+	// Replace characters according to base64url specifications
+	encodedSource = encodedSource.replace(/\+/g, &apos;-&apos;);
+	encodedSource = encodedSource.replace(/\//g, &apos;_&apos;);
+
+	return encodedSource;
+}
+
+function addEXP(request) {
+	var exp = Math.floor(Date.now() / 1000) + 3600;
+	data.exp = exp;
+	return data;
+}
+
+var header = {
+	&quot;alg&quot;: &quot;HS256&quot;,
+	&quot;typ&quot;: &quot;JWT&quot;
+};
+
+var data = {
+    &quot;iss&quot;: &quot;api&quot;,
+    &quot;iat&quot;: Math.floor(Date.now() / 1000) - 6,
+    &quot;nbf&quot;: Math.floor(Date.now() / 1000) - 6,
+    &quot;username&quot;: &quot;api&quot;,
+    &quot;data&quot;: {
+        &quot;seller&quot;: {
+            &quot;site_name&quot;: &quot;${sellerName}&quot;
+        },
+        &quot;table&quot;: [],
+        &quot;user&quot;: {
+            &quot;username&quot;: vars.get(&quot;user1&quot;),
+            &quot;default_table_id&quot;: null,
+            &quot;roles&quot;: [
+                &quot;ROLE_TAB_ADMIN&quot;,
+                &quot;ROLE_USER&quot;
+            ]
+        }
+    }
+}
+
+data = addEXP(data);
+
+var secret = &quot;yL9nT7WfMFcV4kGtoiUv8N7TiRM4a2fU&quot;;
+
+// encode header
+var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));
+var encodedHeader = base64url(stringifiedHeader);
+
+// encode data
+var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));
+
+
+var encodedData = base64url(stringifiedData);
+// build token
+var token = encodedHeader + &quot;.&quot; + encodedData;
+
+// sign token
+var signature = CryptoJS.HmacSHA256(token, secret);
+signature = base64url(signature);
+
+var signedToken = token + &quot;.&quot; + signature;
+vars.put(&quot;MobileJWTToken&quot;, signedToken)
+log.info(&quot;*******************************&quot;+signedToken);</stringProp>
+              <stringProp name="scriptLanguage">javascript</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename">D:\perf-tests\oca\csv-result\RES_OCA.csv</stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
