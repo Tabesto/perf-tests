@@ -3,7 +3,7 @@
 
 ## _Getting Started_
 * [Download JMeter from Apache](https://jmeter.apache.org/download_jmeter.cgi)
-* [Download crypto.js](https://jar-download.com/artifacts/org.webjars.npm/crypto-js/3.1.9-1/source-code) and put it then jmeter/bin directory
+* [Download crypto.js](https://jar-download.com/artifacts/org.webjars.npm/crypto-js/3.1.9-1/source-code) and put it in the jmeter/bin directory
 * [Download the Plugins Manager JAR file]( https://jmeter-plugins.org/wiki/PluginsManager/) and put the file in the lib/ext directory
 * add the following properties to jmeter/bin/user.properties
   ```
